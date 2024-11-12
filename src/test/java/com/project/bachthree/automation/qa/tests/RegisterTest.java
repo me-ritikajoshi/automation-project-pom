@@ -9,6 +9,7 @@ import com.project.bachthree.automation.qa.pages.RegisterPage;
 
 public class RegisterTest extends BaseClass {
 	
+	
 	@Test(description="Register test case")
 	public void verifyRegisterTest() throws InterruptedException {
 		

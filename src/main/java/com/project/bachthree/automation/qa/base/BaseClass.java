@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.support.events.EventFiringDecorator;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
@@ -17,12 +18,16 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 
 import com.project.bachthree.automation.utilities.Utilities;
+import com.project.bachthree.automation.utilities.WebEventListener;
 
 public class BaseClass {
 	
-	protected WebDriver driver;
+	public static WebDriver driver;
+	public static WebDriver eventDriver;
+	public static com.project.bachthree.automation.utilities.WebEventListener listener;
+	public static EventFiringDecorator<WebDriver> decorator;
 	
-	@BeforeMethod
+	//@BeforeMethod
 	public void setup() {
 		
 		Utilities.initGlobalConfiguration();
@@ -46,14 +51,14 @@ public class BaseClass {
 			Reporter.log("Incorrect browser selection.\n Therefore, loading default browser as chrome");
 			driver = new ChromeDriver();
 		}
-		
+		callEventListenerWebDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Utilities.IMPLICIT_WAIT_TIME));
 		driver.get(Utilities.getBaseUrl());
 		
 	}
 	
-		//@BeforeMethod
+		@BeforeMethod
 		@Parameters("browser")
 		public void CrossBrowsersetup(String crossBrowser) {
 		
@@ -78,6 +83,7 @@ public class BaseClass {
 			driver = new ChromeDriver();
 		}
 		
+		callEventListenerWebDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Utilities.IMPLICIT_WAIT_TIME));
 		driver.get(Utilities.getBaseUrl());
@@ -85,6 +91,14 @@ public class BaseClass {
 	}
 	
 	
+		 public static WebDriver callEventListenerWebDriver() {
+			  
+			  listener = new WebEventListener(); 
+			  decorator = new EventFiringDecorator<WebDriver>(listener); 
+			  eventDriver = decorator.decorate(driver); 
+			  driver = eventDriver; 
+			  return driver; 
+			  }
 	
 	
 	@AfterMethod

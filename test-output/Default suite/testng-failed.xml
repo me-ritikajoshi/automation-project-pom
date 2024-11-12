@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.project.bachthree.automation.qa.tests.FormStoneChechBoxTest">
+      <class name="com.project.bachthree.automation.qa.tests.RegisterTest">
         <methods>
-          <include name="setup"/>
-          <include name="verifyAllClicksOnCheckBoxes"/>
+          <include name="CrossBrowsersetup"/>
+          <include name="verifyRegisterTest"/>
           <include name="closeBrowserSession"/>
         </methods>
-      </class> <!-- com.project.bachthree.automation.qa.tests.FormStoneChechBoxTest -->
+      </class> <!-- com.project.bachthree.automation.qa.tests.RegisterTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
